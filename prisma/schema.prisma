@@ -11,10 +11,31 @@ datasource db {
 }
 
 model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
+    id       String @id @default(cuid())
+    title    String
+    content  String
+    authorId String
+
+    hasEdited Boolean  @default(false)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@index([name])
+    comments Comment[] @relation("post-comment")
+
+    @@index([title])
+    @@index([authorId, title])
+    @@index([title, content])
+}
+
+model Comment {
+    id       String @id @default(cuid())
+    content  String
+    authorId String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    hasEdited Boolean  @default(false)
+
+    post   Post   @relation("post-comment", fields: [postId], references: [id], onDelete: Cascade)
+    postId String
 }
