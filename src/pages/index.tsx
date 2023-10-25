@@ -2,8 +2,30 @@ import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
 import { Container } from "react-bootstrap";
 import Navbar from "~/component/Navbar";
+import { api } from "~/utils/api";
 
-export default function Home() {
+type DisplayDataProps = {
+  data:
+    | {
+        post: {
+          id: string;
+          title: string;
+          content: string;
+          authorId: string;
+          hasEdited: boolean;
+          createdAt: Date;
+          updatedAt: Date;
+        };
+        author: {
+          username: string;
+          id: string;
+          profileImageUrl: string;
+        };
+      }[]
+    | undefined;
+};
+
+function DisplayData({ data }: DisplayDataProps) {
   const { isSignedIn, user } = useUser();
 
   return (
