@@ -77,10 +77,10 @@ export const postRouter = createTRPCRouter({
       });
       if (!post) {
         return new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
+          code: "NOT_FOUND",
           message: "Post cannot be found",
         });
       }
-      return await addUserDataToPost([post]);
+      return (await addUserDataToPost([post]))[0];
     }),
 });
