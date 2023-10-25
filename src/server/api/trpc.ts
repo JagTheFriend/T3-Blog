@@ -48,9 +48,11 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  */
 export const createTRPCContext = (opts: CreateNextContextOptions) => {
   const { req } = opts;
-  const currentUser = getAuth(req).user;
+  const { userId } = getAuth(req, {
+    secretKey: process.env.CLERK_SECRET_KEY,
+  });
   const { db } = createInnerTRPCContext({});
-  return { db, currentUser };
+  return { db, userId };
 };
 
 /**
@@ -99,7 +101,7 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 
 const enforceAuth = t.middleware(async ({ ctx, next }) => {
-  if (!ctx.currentUser) {
+  if (!ctx.userId) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
     });
@@ -107,7 +109,7 @@ const enforceAuth = t.middleware(async ({ ctx, next }) => {
 
   return next({
     ctx: {
-      currentUser: ctx.currentUser,
+      userId: ctx.userId,
     },
   });
 });
