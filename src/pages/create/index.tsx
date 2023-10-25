@@ -9,6 +9,29 @@ function CreatePost() {
 
   const blogContentTextbox = useRef<HTMLTextAreaElement>(null);
 
+  const { mutate, isLoading } = api.post.createPost.useMutation({
+    onSuccess: () => {
+      toast.success("Post created successfully!");
+      setBlogTitle("");
+      setBlogContent("");
+    },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors.content;
+      if (errorMessage?.[0]) {
+        toast.error(errorMessage[0]);
+      } else {
+        toast.error("Failed to post! Please try again later.");
+      }
+    },
+  });
+
+  const postBlog = () => {
+    return mutate({
+      title: blogTitle,
+      content: blogContent,
+    });
+  };
+
   useLayoutEffect(() => {
     if (blogContentTextbox?.current) {
       blogContentTextbox.current.style.height = "0px";
