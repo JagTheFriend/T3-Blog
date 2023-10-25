@@ -1,8 +1,9 @@
 import { useUser } from "@clerk/nextjs";
 import type { Post } from "@prisma/client";
+import { format } from "date-fns";
 import Head from "next/head";
 import { useEffect } from "react";
-import { Container, Spinner } from "react-bootstrap";
+import { Card, Container, Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import Navbar from "~/component/Navbar";
 import { api } from "~/utils/api";
@@ -38,7 +39,19 @@ type DisplayPostCardProps = {
 };
 
 function DisplayPostCard({ data }: DisplayPostCardProps) {
-  return <></>;
+  return (
+    <Card style={{ width: "18rem" }}>
+      <Card.Body>
+        <Card.Title>{data.post.title}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">
+          By {data.author.username} at{" "}
+          {format(data.post.createdAt, "dd/MM/yyyy")}
+        </Card.Subtitle>
+        <Card.Text>{data.post.description}</Card.Text>
+        <Card.Link href="#">Read More</Card.Link>
+      </Card.Body>
+    </Card>
+  );
 }
 
 type DisplayDataProps = {
