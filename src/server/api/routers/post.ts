@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import { z } from "zod";
 
 import {
@@ -13,6 +14,7 @@ export const postRouter = createTRPCRouter({
       z.object({
         title: z.string().min(1),
         content: z.string().min(10),
+        description: z.string().min(5),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -20,6 +22,10 @@ export const postRouter = createTRPCRouter({
         data: {
           title: input.title,
           content: input.content,
+          description: input.description,
+          slug: slugify(
+            `${input.title}_${Math.random().toString().replace("0.", "")}`
+          ),
           authorId: ctx.userId,
         },
       });
