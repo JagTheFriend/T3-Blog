@@ -5,6 +5,12 @@ import { toast } from "react-hot-toast";
 import Navbar from "~/component/Navbar";
 import { api } from "~/utils/api";
 
+interface Author {
+  username: string;
+  id: string;
+  profileImageUrl: string;
+}
+
 function DisplayUserName() {
   const { isSignedIn, user } = useUser();
   return (
