@@ -13,6 +13,11 @@ import LoadingPage from "~/component/LoadingPage";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
 
+function DisplayComments({ postId }: { postId: string }) {
+  postId;
+  return <></>;
+}
+
 type DataType = {
   post: Post;
   author: {
@@ -41,6 +46,7 @@ function ViewPostDetail({ data }: ViewPostDetailType) {
     <Container>
       <div
         style={{
+          marginTop: "20px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -66,6 +72,7 @@ function ViewPostDetail({ data }: ViewPostDetailType) {
       >
         ← Go Back
       </Link>
+      <DisplayComments postId={post.id} />
     </Container>
   );
 }
