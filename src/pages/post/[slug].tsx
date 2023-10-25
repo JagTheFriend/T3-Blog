@@ -1,9 +1,12 @@
 import type { Post } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
+import { format } from "date-fns";
 import type { GetStaticProps } from "next";
+import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import toast from "react-hot-toast";
+import LoadingPage from "~/component/LoadingPage";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
 
@@ -17,18 +20,41 @@ type DataType = {
 };
 
 type ViewPostDetailType = {
-  data: TRPCError | DataType[];
+  data: TRPCError | DataType | undefined;
 };
 
 function ViewPostDetail({ data }: ViewPostDetailType) {
-  console.log(data);
-  return <Container>{1}</Container>;
+  if (!data) return <></>;
+
+  const { post, author } = data as DataType;
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  const date: string = format(new Date(post.createdAt), "dd/MM/yyyy");
+
+  return (
+    <Container>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <h3>{post.title}</h3>
+        by {author.username} at {date}
+      </div>
+      <hr />
+      Description: {post.description}
+      <hr />
+    </Container>
+  );
 }
 
 function ViewPost({ slug }: { slug: string }) {
-  const { isLoading, data, isError } = api.post.getPostBySlug.useQuery({
-    slug,
-  });
+  const { isLoading, data, isError, isFetched } =
+    api.post.getPostBySlug.useQuery({
+      slug,
+    });
 
   useEffect(() => {
     if (isError) {
@@ -36,10 +62,16 @@ function ViewPost({ slug }: { slug: string }) {
     }
   }, [isError]);
 
+  useEffect(() => {
+    if (!data && isFetched) {
+      notFound();
+    }
+  }, [data, isFetched]);
+
   return (
     <>
       <NavbarComponent />
-      {isLoading ? "" : isError ? "" : <ViewPostDetail data={data} />}
+      {isLoading ? <LoadingPage /> : <ViewPostDetail data={data} />}
     </>
   );
 }
