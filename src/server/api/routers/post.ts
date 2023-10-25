@@ -20,7 +20,7 @@ export const postRouter = createTRPCRouter({
         data: {
           title: input.title,
           content: input.content,
-          authorId: ctx.currentUser.id,
+          authorId: ctx.userId,
         },
       });
     }),
@@ -37,7 +37,7 @@ export const postRouter = createTRPCRouter({
           AND: [
             {
               title: input.title,
-              authorId: ctx.currentUser.id,
+              authorId: ctx.userId,
             },
           ],
         },
@@ -47,7 +47,7 @@ export const postRouter = createTRPCRouter({
   deleteAllPostsByAuthor: privateProcedure.mutation(({ ctx }) => {
     return ctx.db.post.deleteMany({
       where: {
-        authorId: ctx.currentUser.id,
+        authorId: ctx.userId,
       },
     });
   }),
