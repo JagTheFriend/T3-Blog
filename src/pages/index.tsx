@@ -44,8 +44,11 @@ type DisplayDataProps = {
 };
 
 function DisplayData({ data }: DisplayDataProps) {
-  const { isSignedIn, user } = useUser();
-  return <>{isSignedIn ? `Welcome ${user.username}!` : ""}</>;
+  return (
+    <>
+      <DisplayUserName />
+    </>
+  );
 }
 
 function LoadingPage() {
