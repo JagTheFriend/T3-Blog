@@ -39,13 +39,16 @@ type DisplayPostCardProps = {
 };
 
 function DisplayPostCard({ data }: DisplayPostCardProps) {
+  const date: string = format(
+    new Date(data.post.createdAt),
+    "dd/MM/yyyy"
+  ) as string;
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Body>
         <Card.Title>{data.post.title}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          By {data.author.username} at{" "}
-          {format(data.post.createdAt, "dd/MM/yyyy")}
+          By {data.author.username} at {date}
         </Card.Subtitle>
         <Card.Text>{data.post.description}</Card.Text>
         <Card.Link href="#">Read More</Card.Link>
