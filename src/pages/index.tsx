@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { Container } from "react-bootstrap";
 import Navbar from "~/component/Navbar";
 
 import { api } from "~/utils/api";
@@ -14,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="container">Hello</div>
+      <Container>Hello</Container>
     </>
   );
 }
