@@ -11,9 +11,12 @@ datasource db {
 }
 
 model Post {
-    id       String @id @default(cuid())
-    title    String
-    content  String
+    id          String @id @default(cuid())
+    title       String
+    content     String
+    description String
+    slug        String @unique
+
     authorId String
 
     hasEdited Boolean  @default(false)
@@ -23,8 +26,11 @@ model Post {
     comments Comment[] @relation("post-comment")
 
     @@index([title])
+    @@index([slug])
     @@index([authorId, title])
     @@index([title, content])
+    @@index([slug, content])
+    @@index([slug, title])
 }
 
 model Comment {
