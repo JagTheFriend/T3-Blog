@@ -21,10 +21,12 @@ function DisplayUserName() {
     <div
       style={{
         marginTop: "20px",
+        marginBottom: "20px",
         justifyContent: "center",
         display: "flex",
         alignItems: "center",
         textAlign: "center",
+        textDecoration: "underline",
       }}
     >
       {isSignedIn ? `Welcome ${user.username}!` : ""}
