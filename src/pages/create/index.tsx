@@ -46,6 +46,10 @@ function CreatePost() {
       return toast.error("Provide blog title");
     }
 
+    if (blogDescription.trim().length == 0) {
+      return toast.error("Provide blog description");
+    }
+
     if (blogContent.trim().length == 0) {
       return toast.error("Provide blog content");
     }
