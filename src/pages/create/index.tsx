@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   Button,
@@ -13,6 +14,7 @@ import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
 
 function CreatePost() {
+  const router = useRouter();
   const useIsomorphicLayoutEffect =
     typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -26,6 +28,7 @@ function CreatePost() {
       toast.success("Post created successfully!");
       setBlogTitle("");
       setBlogContent("");
+      router.push("/");
     },
     onError: (e) => {
       const errorMessage = e.data?.zodError?.fieldErrors.content;
@@ -77,6 +80,7 @@ function CreatePost() {
           className="mb-3 mt-3"
         >
           <Form.Control
+            value={blogTitle}
             disabled={isLoading}
             type="email"
             placeholder="Enter title of the blog"
@@ -88,6 +92,7 @@ function CreatePost() {
 
         <FloatingLabel label="Blog Content" controlId="blogContentInput">
           <Form.Control
+            value={blogContent}
             disabled={isLoading}
             className="mb-3"
             as="textarea"
