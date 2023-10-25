@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import slugify from "slugify";
 import { z } from "zod";
 
@@ -65,4 +66,21 @@ export const postRouter = createTRPCRouter({
     });
     return await addUserDataToPost(posts);
   }),
+
+  getPostBySlug: publicProcedure
+    .input(z.object({ slug: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      const post = await ctx.db.post.findUnique({
+        where: {
+          slug: input.slug,
+        },
+      });
+      if (!post) {
+        return new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Post cannot be found",
+        });
+      }
+      return await addUserDataToPost([post]);
+    }),
 });
