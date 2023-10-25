@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   Button,
   Container,
@@ -13,6 +13,9 @@ import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
 
 function CreatePost() {
+  const useIsomorphicLayoutEffect =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
   const [blogTitle, setBlogTitle] = useState<string>("");
   const [blogContent, setBlogContent] = useState<string>("");
 
@@ -49,7 +52,7 @@ function CreatePost() {
     });
   };
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (blogContentTextbox?.current) {
       blogContentTextbox.current.style.height = "0px";
       const currentHeight = blogContentTextbox.current.scrollHeight;
