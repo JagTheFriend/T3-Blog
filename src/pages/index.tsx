@@ -43,10 +43,7 @@ type DisplayPostCardProps = {
 
 function DisplayPostCard({ data }: DisplayPostCardProps) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const date: string = format(
-    new Date(data.post.createdAt),
-    "dd/MM/yyyy"
-  ) as string;
+  const date: string = format(new Date(data.post.createdAt), "dd/MM/yyyy");
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Body
@@ -67,7 +64,7 @@ function DisplayPostCard({ data }: DisplayPostCardProps) {
           {data.post.description}
         </Card.Text>
         <Link
-          href="/"
+          href={`/post/${data.post.slug}`}
           className="card-link"
           style={{
             background: "none !important",
