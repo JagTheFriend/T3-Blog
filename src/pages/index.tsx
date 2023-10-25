@@ -1,11 +1,10 @@
+import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
 import { Container } from "react-bootstrap";
 import Navbar from "~/component/Navbar";
 
-import { api } from "~/utils/api";
-
 export default function Home() {
-  const hello = api.post.hello.useQuery({ text: "from tRPC" });
+  const { isSignedIn, user } = useUser();
 
   return (
     <>
@@ -15,7 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <Container>Hello</Container>
+      <Container>{isSignedIn ? `Welcome ${user.username}!` : ""}</Container>
     </>
   );
 }
