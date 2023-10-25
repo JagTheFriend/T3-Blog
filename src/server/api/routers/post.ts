@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  privateProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -11,12 +15,11 @@ export const postRouter = createTRPCRouter({
       };
     }),
 
-  createPost: publicProcedure
+  createPost: privateProcedure
     .input(
       z.object({
         title: z.string().min(1),
         content: z.string().min(10),
-        authorId: z.string().min(1),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -24,15 +27,14 @@ export const postRouter = createTRPCRouter({
         data: {
           title: input.title,
           content: input.content,
-          authorId: input.authorId,
+          authorId: ctx.currentUser.id,
         },
       });
     }),
 
-  deletePost: publicProcedure
+  deletePost: privateProcedure
     .input(
       z.object({
-        authorId: z.string(),
         title: z.string().min(1),
       })
     )
@@ -42,22 +44,20 @@ export const postRouter = createTRPCRouter({
           AND: [
             {
               title: input.title,
-              authorId: input.authorId,
+              authorId: ctx.currentUser.id,
             },
           ],
         },
       });
     }),
 
-  deleteAllPostsByAuthor: publicProcedure
-    .input(z.object({ authorId: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.db.post.deleteMany({
-        where: {
-          authorId: input.authorId,
-        },
-      });
-    }),
+  deleteAllPostsByAuthor: privateProcedure.mutation(({ ctx }) => {
+    return ctx.db.post.deleteMany({
+      where: {
+        authorId: ctx.currentUser.id,
+      },
+    });
+  }),
 
   getPosts: publicProcedure.query(({ ctx }) => {
     return ctx.db.post.findFirst({
