@@ -26,9 +26,14 @@ function NavbarComponent() {
           </Nav>
           <div className="d-flex">
             {isSignedIn ? (
-              <UserButton />
+              <UserButton
+                afterSignOutUrl="/"
+                afterMultiSessionSingleSignOutUrl="/"
+                afterSwitchSessionUrl="/"
+                signInUrl="/sign-in"
+              />
             ) : (
-              <SignInButton>
+              <SignInButton afterSignInUrl="/" afterSignUpUrl="/">
                 <Button variant="outline-success">Sign In</Button>
               </SignInButton>
             )}
