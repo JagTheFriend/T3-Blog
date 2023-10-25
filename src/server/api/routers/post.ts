@@ -8,14 +8,6 @@ import {
 import { addUserDataToPost } from "~/utils/addUserDataToPost";
 
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   createPost: privateProcedure
     .input(
       z.object({
