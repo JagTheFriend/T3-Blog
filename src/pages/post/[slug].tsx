@@ -1,11 +1,13 @@
 import type { Post } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
 import { format } from "date-fns";
+import { sanitize } from "dompurify";
 import type { GetStaticProps } from "next";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import toast from "react-hot-toast";
+import { Converter } from "showdown";
 import LoadingPage from "~/component/LoadingPage";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
@@ -31,6 +33,9 @@ function ViewPostDetail({ data }: ViewPostDetailType) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const date: string = format(new Date(post.createdAt), "dd/MM/yyyy");
 
+  const converter = new Converter();
+  const postContent = sanitize(converter.makeHtml(post.content));
+
   return (
     <Container>
       <div
@@ -46,6 +51,7 @@ function ViewPostDetail({ data }: ViewPostDetailType) {
       <hr />
       Description: {post.description}
       <hr />
+      <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
     </Container>
   );
 }
