@@ -5,6 +5,23 @@ import { toast } from "react-hot-toast";
 import Navbar from "~/component/Navbar";
 import { api } from "~/utils/api";
 
+function DisplayUserName() {
+  const { isSignedIn, user } = useUser();
+  return (
+    <div
+      style={{
+        marginTop: "20px",
+        justifyContent: "center",
+        display: "flex",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      {isSignedIn ? `Welcome ${user.username}!` : ""}
+    </div>
+  );
+}
+
 type DisplayDataProps = {
   data:
     | {
