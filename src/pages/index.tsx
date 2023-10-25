@@ -4,8 +4,9 @@ import { format } from "date-fns";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
-import { Card, Container, Spinner } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { toast } from "react-hot-toast";
+import LoadingPage from "~/component/LoadingPage";
 import Navbar from "~/component/Navbar";
 import { api } from "~/utils/api";
 
@@ -98,22 +99,6 @@ function DisplayData({ data }: DisplayDataProps) {
         <DisplayPostCard key={post.post.id} data={post} />
       ))}
     </>
-  );
-}
-
-function LoadingPage() {
-  return (
-    <div
-      style={{
-        marginTop: "30px",
-        justifyContent: "center",
-        display: "flex",
-        alignItems: "center",
-        textAlign: "center",
-      }}
-    >
-      <Spinner animation="border" variant="primary" />
-    </div>
   );
 }
 
