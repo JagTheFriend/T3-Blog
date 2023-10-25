@@ -66,6 +66,7 @@ function CreatePost() {
       </Head>
 
       <NavbarComponent />
+
       <Container>
         <FloatingLabel
           controlId="blogTitleInput"
@@ -81,6 +82,7 @@ function CreatePost() {
             }}
           />
         </FloatingLabel>
+
         <FloatingLabel label="Blog Content" controlId="blogContentInput">
           <Form.Control
             disabled={isLoading}
@@ -94,6 +96,7 @@ function CreatePost() {
             }}
           />
         </FloatingLabel>
+
         <FooterButtons>
           {isLoading ? (
             <Spinner animation="border" variant="primary" />
