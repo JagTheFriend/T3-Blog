@@ -12,15 +12,17 @@ function NavbarComponent() {
       data-bs-theme="dark"
     >
       <Container>
-        <Navbar.Brand>
-          <Link href="/">T3 Blog</Link>
-        </Navbar.Brand>
+        <Link className="navbar-brand" href="/">
+          T3 Blog
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link>
-              <Link href="/">Home</Link>
-            </Nav.Link>
+            <li className="nav-item">
+              <Link href="/" className="nav-link">
+                Home
+              </Link>
+            </li>
             <NavDropdown title="Action" id="basic-nav-dropdown">
               <NavDropdown.Item>
                 <Link href="/create">Create Post</Link>
