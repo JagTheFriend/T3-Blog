@@ -1,6 +1,7 @@
 import { useUser } from "@clerk/nextjs";
 import type { Post } from "@prisma/client";
 import Head from "next/head";
+import { useEffect } from "react";
 import { Container, Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import Navbar from "~/component/Navbar";
@@ -52,7 +53,6 @@ type DisplayDataProps = {
 function DisplayData({ data }: DisplayDataProps) {
   return (
     <>
-      <DisplayUserName />
       {data?.map((post) => (
         <DisplayPostCard key={post.post.id} data={post} />
       ))}
@@ -79,9 +79,11 @@ function LoadingPage() {
 function Home() {
   const { data, isLoading, isError } = api.post.getPosts.useQuery();
 
-  if (isError) {
-    toast.error("Failed to retrieve post! Please try again later.");
-  }
+  useEffect(() => {
+    if (isError) {
+      toast.error("Failed to retrieve post! Please try again later.");
+    }
+  }, [isError]);
 
   return (
     <>
@@ -92,6 +94,7 @@ function Home() {
       </Head>
       <Navbar />
       <Container>
+        <DisplayUserName />
         {isLoading ? <LoadingPage /> : <DisplayData data={data} />}
       </Container>
     </>
