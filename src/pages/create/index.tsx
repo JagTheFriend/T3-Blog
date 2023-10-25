@@ -1,7 +1,16 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { Button, Container, FloatingLabel, Form } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  FloatingLabel,
+  Form,
+  Spinner,
+} from "react-bootstrap";
 import FooterButtons from "~/component/FooterButtons";
 import NavbarComponent from "~/component/Navbar";
+import { api } from "~/utils/api";
+
+import { toast } from "react-hot-toast";
 
 function CreatePost() {
   const [blogTitle, setBlogTitle] = useState<string>("");
