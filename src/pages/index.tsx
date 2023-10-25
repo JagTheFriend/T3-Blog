@@ -1,4 +1,5 @@
 import { useUser } from "@clerk/nextjs";
+import type { Post } from "@prisma/client";
 import Head from "next/head";
 import { Container, Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
@@ -28,23 +29,22 @@ function DisplayUserName() {
   );
 }
 
+type DisplayPostCardProps = {
+  data: {
+    post: Post;
+    author: Author;
+  };
+};
+
+function DisplayPostCard({ data }: DisplayPostCardProps) {
+  return <></>;
+}
+
 type DisplayDataProps = {
   data:
     | {
-        post: {
-          id: string;
-          title: string;
-          content: string;
-          authorId: string;
-          hasEdited: boolean;
-          createdAt: Date;
-          updatedAt: Date;
-        };
-        author: {
-          username: string;
-          id: string;
-          profileImageUrl: string;
-        };
+        post: Post;
+        author: Author;
       }[]
     | undefined;
 };
@@ -53,6 +53,9 @@ function DisplayData({ data }: DisplayDataProps) {
   return (
     <>
       <DisplayUserName />
+      {data?.map((post) => (
+        <DisplayPostCard key={post.post.id} data={post} />
+      ))}
     </>
   );
 }
