@@ -70,8 +70,22 @@ function CreatePost() {
           />
         </FloatingLabel>
         <FooterButtons>
-          <Button variant="outline-primary">Preview</Button>
-          <Button variant="outline-success">Post</Button>
+          {isLoading ? (
+            <Spinner animation="border" variant="primary" />
+          ) : (
+            <>
+              <Button disabled={isLoading} variant="outline-primary">
+                Preview
+              </Button>
+              <Button
+                disabled={isLoading}
+                onClick={() => postBlog()}
+                variant="outline-success"
+              >
+                Post
+              </Button>
+            </>
+          )}
         </FooterButtons>
       </Container>
     </>
