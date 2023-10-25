@@ -8,13 +8,13 @@ function CreatePost() {
 
   const blogContentTextbox = useRef<HTMLTextAreaElement>(null);
 
-  function adjustHeight() {
-    blogContentTextbox.current!.style.height = `${
-      blogContentTextbox.current!.scrollHeight
-    }px`;
-  }
-
-  useLayoutEffect(adjustHeight, []);
+  useLayoutEffect(() => {
+    if (blogContentTextbox?.current) {
+      blogContentTextbox.current.style.height = "0px";
+      const currentHeight = blogContentTextbox.current.scrollHeight;
+      blogContentTextbox.current.style.height = currentHeight + "px";
+    }
+  }, [blogContent]);
 
   return (
     <>
@@ -42,7 +42,6 @@ function CreatePost() {
             ref={blogContentTextbox}
             onChange={(e) => {
               setBlogContent(e.target.value);
-              adjustHeight();
             }}
           />
         </FloatingLabel>
