@@ -4,7 +4,12 @@ import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 function NavbarComponent() {
   const { isSignedIn } = useAuth();
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar
+      expand="lg"
+      className="bg-body-tertiary"
+      bg="dark"
+      data-bs-theme="dark"
+    >
       <Container>
         <Navbar.Brand href="#home">T3 Blog</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
