@@ -14,7 +14,16 @@ import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
 
 function DisplayComments({ postId }: { postId: string }) {
-  postId;
+  const { data, isError, isLoading } = api.comment.getComments.useQuery({
+    postId,
+  });
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Cannot load comments");
+    }
+  }, [isError]);
+
   return <></>;
 }
 
