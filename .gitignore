@@ -9,6 +9,7 @@
 /coverage
 
 # database
+/prisma/migrations/
 /prisma/db.sqlite
 /prisma/db.sqlite-journal
 
