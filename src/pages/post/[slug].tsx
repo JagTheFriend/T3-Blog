@@ -1,10 +1,45 @@
+import type { Post } from "@prisma/client";
+import type { TRPCError } from "@trpc/server";
 import type { GetStaticProps } from "next";
+import { useEffect } from "react";
 import { Container } from "react-bootstrap";
+import toast from "react-hot-toast";
+import NavbarComponent from "~/component/Navbar";
+import { api } from "~/utils/api";
+
+type ViewPostDetailType = {
+  data:
+    | TRPCError
+    | {
+        post: Post;
+        author: {
+          username: string;
+          id: string;
+          profileImageUrl: string;
+        };
+      }[];
+};
+
+function ViewPostDetail({ data }: ViewPostDetailType) {
+  console.log(data);
+  return <Container>{1}</Container>;
+}
 
 function ViewPost({ slug }: { slug: string }) {
+  const { isLoading, data, isError } = api.post.getPostBySlug.useQuery({
+    slug,
+  });
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Failed to retrieve post! Please try again later.");
+    }
+  }, [isError]);
+
   return (
     <>
-      <Container>{slug}</Container>
+      <NavbarComponent />
+      {isLoading ? "" : isError ? "" : <ViewPostDetail data={data} />}
     </>
   );
 }
