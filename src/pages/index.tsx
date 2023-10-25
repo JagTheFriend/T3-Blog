@@ -1,6 +1,6 @@
 import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import Navbar from "~/component/Navbar";
 import { api } from "~/utils/api";
@@ -32,7 +32,19 @@ function DisplayData({ data }: DisplayDataProps) {
 }
 
 function LoadingPage() {
-  return <></>;
+  return (
+    <div
+      style={{
+        marginTop: "30px",
+        justifyContent: "center",
+        display: "flex",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      <Spinner animation="border" variant="primary" />
+    </div>
+  );
 }
 
 function Home() {
