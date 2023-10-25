@@ -35,6 +35,9 @@ dependencies:
   date-fns:
     specifier: ^2.30.0
     version: 2.30.0
+  dompurify:
+    specifier: ^3.0.6
+    version: 3.0.6
   next:
     specifier: ^13.5.4
     version: 13.5.6(react-dom@18.2.0)(react@18.2.0)
@@ -61,6 +64,9 @@ dependencies:
     version: 3.22.4
 
 devDependencies:
+  '@types/dompurify':
+    specifier: ^3.0.4
+    version: 3.0.4
   '@types/eslint':
     specifier: ^8.44.2
     version: 8.44.6
@@ -581,6 +587,12 @@ packages:
       '@types/node': 18.18.6
     dev: false
 
+  /@types/dompurify@3.0.4:
+    resolution: {integrity: sha512-1Jk8S/IRzNSbwQRbuGuLFHviwxQ8pX81ZEW3INY9432Cwb4VedkBYan8gSIXVLOLHBtimOmUTEYphjRVmo+30g==}
+    dependencies:
+      '@types/trusted-types': 2.0.5
+    dev: true
+
   /@types/eslint@8.44.6:
     resolution: {integrity: sha512-P6bY56TVmX8y9J87jHNgQh43h6VVU+6H7oN7hgvivV81K2XY8qJZ5vqPy/HdUoVIelii2kChYVzQanlswPWVFw==}
     dependencies:
@@ -699,6 +711,10 @@ packages:
       '@types/mime': 3.0.3
       '@types/node': 18.18.6
     dev: false
+
+  /@types/trusted-types@2.0.5:
+    resolution: {integrity: sha512-I3pkr8j/6tmQtKV/ZzHtuaqYSQvyjGRKH4go60Rr0IDLlFxuRT5V32uvB1mecM5G1EVAUyF/4r4QZ1GHgz+mxA==}
+    dev: true
 
   /@types/warning@3.0.2:
     resolution: {integrity: sha512-S/2+OjBIcBl8Kur23YLe0hG1e7J5m2bHfB4UuMNoLZjIFhQWhTf1FeS+WFoXHUC6QsCEfk4pftj4J1KIKC1glA==}
@@ -1226,6 +1242,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.2
       csstype: 3.1.2
+    dev: false
+
+  /dompurify@3.0.6:
+    resolution: {integrity: sha512-ilkD8YEnnGh1zJ240uJsW7AzE+2qpbOUYjacomn3AvJ6J4JhKGSZ2nh4wUIXPZrEPppaCLx5jFe8T89Rk8tQ7w==}
     dev: false
 
   /dot-case@3.0.4:
