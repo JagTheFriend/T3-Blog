@@ -1,5 +1,5 @@
-import { useAuth } from "@clerk/nextjs";
-import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
+import { Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 function NavbarComponent() {
   const { isSignedIn } = useAuth();
@@ -24,6 +24,15 @@ function NavbarComponent() {
               <NavDropdown.Item href="#action/3.3">My Posts</NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          <div className="d-flex">
+            {isSignedIn ? (
+              <UserButton />
+            ) : (
+              <SignInButton>
+                <Button variant="outline-success">Sign In</Button>
+              </SignInButton>
+            )}
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
