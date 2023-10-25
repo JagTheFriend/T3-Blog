@@ -7,17 +7,17 @@ import toast from "react-hot-toast";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
 
+type DataType = {
+  post: Post;
+  author: {
+    username: string;
+    id: string;
+    profileImageUrl: string;
+  };
+};
+
 type ViewPostDetailType = {
-  data:
-    | TRPCError
-    | {
-        post: Post;
-        author: {
-          username: string;
-          id: string;
-          profileImageUrl: string;
-        };
-      }[];
+  data: TRPCError | DataType[];
 };
 
 function ViewPostDetail({ data }: ViewPostDetailType) {
