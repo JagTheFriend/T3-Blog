@@ -19,6 +19,7 @@ function CreatePost() {
     typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
   const [blogTitle, setBlogTitle] = useState<string>("");
+  const [blogDescription, setBlogDescription] = useState<string>("");
   const [blogContent, setBlogContent] = useState<string>("");
 
   const blogContentTextbox = useRef<HTMLTextAreaElement>(null);
@@ -52,6 +53,7 @@ function CreatePost() {
     return mutate({
       title: blogTitle,
       content: blogContent,
+      description: blogDescription,
     });
   };
 
@@ -82,10 +84,26 @@ function CreatePost() {
           <Form.Control
             value={blogTitle}
             disabled={isLoading}
-            type="email"
+            type="text"
             placeholder="Enter title of the blog"
             onChange={(e) => {
               setBlogTitle(e.target.value);
+            }}
+          />
+        </FloatingLabel>
+
+        <FloatingLabel
+          controlId="blogDescriptionInput"
+          label="Blog Description"
+          className="mb-3 mt-3"
+        >
+          <Form.Control
+            value={blogDescription}
+            disabled={isLoading}
+            type="text"
+            placeholder="Enter description of the blog"
+            onChange={(e) => {
+              setBlogDescription(e.target.value);
             }}
           />
         </FloatingLabel>
