@@ -5,6 +5,7 @@ import {
   privateProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { addUserDataToPost } from "~/utils/addUserDataToPost";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -59,9 +60,11 @@ export const postRouter = createTRPCRouter({
     });
   }),
 
-  getPosts: publicProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
+  getPosts: publicProcedure.query(async ({ ctx }) => {
+    const posts = await ctx.db.post.findMany({
+      orderBy: [{ createdAt: "desc" }],
+      take: 10,
     });
+    return await addUserDataToPost(posts);
   }),
 });
