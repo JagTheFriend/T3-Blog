@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useLayoutEffect, useRef, useState } from "react";
 import {
   Button,
@@ -6,11 +7,10 @@ import {
   Form,
   Spinner,
 } from "react-bootstrap";
+import { toast } from "react-hot-toast";
 import FooterButtons from "~/component/FooterButtons";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
-
-import { toast } from "react-hot-toast";
 
 function CreatePost() {
   const [blogTitle, setBlogTitle] = useState<string>("");
@@ -59,6 +59,12 @@ function CreatePost() {
 
   return (
     <>
+      <Head>
+        <title>Create T3 Blog</title>
+        <meta name="description" content="Create a new post" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <NavbarComponent />
       <Container>
         <FloatingLabel
