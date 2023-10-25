@@ -1,4 +1,5 @@
 import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
+import Link from "next/link";
 import { Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 function NavbarComponent() {
@@ -11,13 +12,19 @@ function NavbarComponent() {
       data-bs-theme="dark"
     >
       <Container>
-        <Navbar.Brand href="/">T3 Blog</Navbar.Brand>
+        <Navbar.Brand>
+          <Link href="/">T3 Blog</Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link>
+              <Link href="/">Home</Link>
+            </Nav.Link>
             <NavDropdown title="Action" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/create">Create Post</NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link href="/create">Create Post</Link>
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.3">My Posts</NavDropdown.Item>
             </NavDropdown>
