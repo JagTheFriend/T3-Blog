@@ -44,4 +44,10 @@ model Comment {
 
     post   Post   @relation("post-comment", fields: [postId], references: [id], onDelete: Cascade)
     postId String
+
+    @@index([postId])
+    @@index([id])
+    @@index([postId, id])
+    @@index([postId, content])
+    @@index([content, authorId])
 }
