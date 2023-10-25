@@ -35,6 +35,14 @@ function CreatePost() {
   });
 
   const postBlog = () => {
+    if (blogTitle.trim().length == 0) {
+      return toast.error("Provide blog title");
+    }
+
+    if (blogContent.trim().length == 0) {
+      return toast.error("Provide blog content");
+    }
+
     return mutate({
       title: blogTitle,
       content: blogContent,
