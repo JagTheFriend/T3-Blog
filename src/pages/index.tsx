@@ -39,6 +39,7 @@ type DisplayPostCardProps = {
 };
 
 function DisplayPostCard({ data }: DisplayPostCardProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const date: string = format(
     new Date(data.post.createdAt),
     "dd/MM/yyyy"
