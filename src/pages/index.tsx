@@ -2,6 +2,7 @@ import { useUser } from "@clerk/nextjs";
 import type { Post } from "@prisma/client";
 import { format } from "date-fns";
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect } from "react";
 import { Card, Container, Spinner } from "react-bootstrap";
 import { toast } from "react-hot-toast";
@@ -46,13 +47,37 @@ function DisplayPostCard({ data }: DisplayPostCardProps) {
   ) as string;
   return (
     <Card style={{ width: "18rem" }}>
-      <Card.Body>
+      <Card.Body
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          alignContent: "space-between",
+          flexWrap: "wrap",
+          flexDirection: "column",
+        }}
+      >
         <Card.Title>{data.post.title}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
           By {data.author.username} at {date}
         </Card.Subtitle>
-        <Card.Text>{data.post.description}</Card.Text>
-        <Card.Link href="#">Read More</Card.Link>
+        <Card.Text style={{ textAlign: "center" }}>
+          {data.post.description}
+        </Card.Text>
+        <Link
+          href="/"
+          className="card-link"
+          style={{
+            background: "none !important",
+            border: "none",
+            padding: "0 !important",
+            color: "#069",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+        >
+          Read More
+        </Link>
       </Card.Body>
     </Card>
   );
