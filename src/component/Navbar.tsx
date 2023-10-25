@@ -17,9 +17,7 @@ function NavbarComponent() {
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <NavDropdown title="Action" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">
-                Create Post
-              </NavDropdown.Item>
+              <NavDropdown.Item href="/create">Create Post</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.3">My Posts</NavDropdown.Item>
             </NavDropdown>
