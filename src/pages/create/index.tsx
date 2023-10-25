@@ -50,6 +50,7 @@ function CreatePost() {
           className="mb-3 mt-3"
         >
           <Form.Control
+            disabled={isLoading}
             type="email"
             placeholder="Enter title of the blog"
             onChange={(e) => {
@@ -59,6 +60,7 @@ function CreatePost() {
         </FloatingLabel>
         <FloatingLabel label="Blog Content" controlId="blogContentInput">
           <Form.Control
+            disabled={isLoading}
             className="mb-3"
             as="textarea"
             placeholder="Enter content of the blog (markdown is supported)"
