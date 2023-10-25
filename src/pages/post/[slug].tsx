@@ -3,6 +3,7 @@ import type { TRPCError } from "@trpc/server";
 import { format } from "date-fns";
 import { sanitize } from "dompurify";
 import type { GetStaticProps } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
@@ -52,6 +53,19 @@ function ViewPostDetail({ data }: ViewPostDetailType) {
       Description: {post.description}
       <hr />
       <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
+      <Link
+        href="/"
+        style={{
+          background: "none !important",
+          border: "none",
+          padding: "0 !important",
+          color: "#069",
+          textDecoration: "underline",
+          cursor: "pointer",
+        }}
+      >
+        ← Go Back
+      </Link>
     </Container>
   );
 }
