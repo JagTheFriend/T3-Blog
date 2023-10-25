@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { Container, FloatingLabel, Form } from "react-bootstrap";
+import { Button, Container, FloatingLabel, Form } from "react-bootstrap";
+import FooterButtons from "~/component/FooterButtons";
 import NavbarComponent from "~/component/Navbar";
 
 function CreatePost() {
@@ -33,10 +34,10 @@ function CreatePost() {
             }}
           />
         </FloatingLabel>
-        <FloatingLabel label="Blog Content">
+        <FloatingLabel label="Blog Content" controlId="blogContentInput">
           <Form.Control
+            className="mb-3"
             as="textarea"
-            id="blogInputTextArea"
             placeholder="Enter content of the blog (markdown is supported)"
             style={{ height: "30px" }}
             ref={blogContentTextbox}
@@ -45,6 +46,10 @@ function CreatePost() {
             }}
           />
         </FloatingLabel>
+        <FooterButtons>
+          <Button variant="outline-primary">Preview</Button>
+          <Button variant="outline-success">Post</Button>
+        </FooterButtons>
       </Container>
     </>
   );
