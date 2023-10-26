@@ -35,18 +35,13 @@ export const postRouter = createTRPCRouter({
   deletePost: privateProcedure
     .input(
       z.object({
-        title: z.string().min(1),
+        postId: z.string().min(1),
       })
     )
     .mutation(({ ctx, input }) => {
-      return ctx.db.post.deleteMany({
+      return ctx.db.post.delete({
         where: {
-          AND: [
-            {
-              title: input.title,
-              authorId: ctx.userId,
-            },
-          ],
+          id: input.postId,
         },
       });
     }),
