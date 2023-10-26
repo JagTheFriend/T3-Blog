@@ -5,6 +5,7 @@ import {
   privateProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { addUserDataToComment } from "~/utils/addUserDataToComment";
 
 export const commentRouter = createTRPCRouter({
   getComments: publicProcedure
@@ -16,7 +17,7 @@ export const commentRouter = createTRPCRouter({
         },
       });
 
-      return comments;
+      return await addUserDataToComment(comments);
     }),
 
   createComment: privateProcedure
