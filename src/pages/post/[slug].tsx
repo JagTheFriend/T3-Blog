@@ -3,8 +3,15 @@ import type { Comment } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Button, Container, FloatingLabel, Form } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  FloatingLabel,
+  Form,
+  ListGroup,
+} from "react-bootstrap";
 import toast from "react-hot-toast";
 import DisplayBlogContent, {
   type DataType,
@@ -28,6 +35,7 @@ function CreateComment({ postId }: CreateCommentProps) {
     },
     onSuccess: () => {
       toast.success("Comment created successfully!");
+      setComment("");
       setIsLoading(false);
     },
   });
@@ -88,7 +96,22 @@ type DisplayCommentContentProps = {
 function DisplayCommentContent({
   receivedComment,
 }: DisplayCommentContentProps) {
-  return <></>;
+  return (
+    <div style={{ marginBottom: "1rem" }}>
+      <Image
+        alt="Profile Image"
+        src={receivedComment.author.profileImageUrl}
+        width={30}
+        height={30}
+        style={{
+          borderRadius: "50%",
+          marginRight: "5px",
+        }}
+      />
+      {receivedComment.author.username}: {receivedComment.comment.content}
+      <hr />
+    </div>
+  );
 }
 
 function DisplayComments({ postId }: { postId: string }) {
@@ -109,14 +132,19 @@ function DisplayComments({ postId }: { postId: string }) {
   return (
     <>
       <CreateComment postId={postId} />
-      {!data
-        ? ""
-        : data.map((receivedData) => (
+      <hr />
+      {!data ? (
+        ""
+      ) : (
+        <ListGroup className="mt-3">
+          {data.map((receivedData) => (
             <DisplayCommentContent
               key={receivedData.comment.id}
               receivedComment={receivedData}
             />
           ))}
+        </ListGroup>
+      )}
     </>
   );
 }
