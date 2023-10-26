@@ -3,6 +3,7 @@ import type { TRPCError } from "@trpc/server";
 import { format } from "date-fns";
 import { sanitize } from "dompurify";
 import type { GetStaticProps } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
@@ -103,6 +104,14 @@ function ViewPost({ slug }: { slug: string }) {
 
   return (
     <>
+      <Head>
+        <title>T3 Blog - {(data as DataType).post.title}</title>
+        <meta
+          name="description"
+          content={(data as DataType).post.description}
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <NavbarComponent />
       {isLoading ? <LoadingPage /> : <ViewPostDetail data={data} />}
     </>
