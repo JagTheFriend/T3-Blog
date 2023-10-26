@@ -139,7 +139,11 @@ function CreatePost() {
             <Spinner animation="border" variant="primary" />
           ) : (
             <>
-              <Button disabled={isLoading} variant="outline-primary">
+              <Button
+                disabled={isLoading}
+                onClick={() => handleShow()}
+                variant="outline-primary"
+              >
                 Preview
               </Button>
               <Button
