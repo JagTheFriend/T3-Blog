@@ -30,8 +30,8 @@ function CreateComment({ postId }: CreateCommentProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutate } = api.comment.createComment.useMutation({
-    onError: (error) => {
-      toast.error(error.message);
+    onError: () => {
+      toast.error("Something went wrong. Pleas try again later!");
       setIsLoading(false);
     },
     onSuccess: () => {
@@ -105,8 +105,8 @@ function DeleteButton({
   }
 
   const { mutate, isLoading } = api.comment.deleteComment.useMutation({
-    onError: (error) => {
-      toast.error(error.message);
+    onError: () => {
+      toast.error("Something went wrong. Pleas try again later!");
     },
     onSuccess: () => {
       toast.success("Comment deleted successfully!");
