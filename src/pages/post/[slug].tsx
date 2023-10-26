@@ -1,14 +1,11 @@
 import type { Post } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
-import { format } from "date-fns";
-import { sanitize } from "dompurify";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import toast from "react-hot-toast";
-import { Converter } from "showdown";
+import DisplayBlogContent from "~/component/DisplayBlogContent";
 import LoadingPage from "~/component/LoadingPage";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
@@ -45,42 +42,9 @@ function ViewPostDetail({ data }: ViewPostDetailType) {
 
   const { post, author } = data as DataType;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const date: string = format(new Date(post.createdAt), "dd/MM/yyyy");
-
-  const converter = new Converter();
-  const postContent = sanitize(converter.makeHtml(post.content));
-
   return (
     <Container>
-      <div
-        style={{
-          marginTop: "20px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <h3>{post.title}</h3>
-        by {author.username} at {date}
-      </div>
-      <hr />
-      Description: {post.description}
-      <hr />
-      <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
-      <Link
-        href="/"
-        style={{
-          background: "none !important",
-          border: "none",
-          padding: "0 !important",
-          color: "#069",
-          textDecoration: "underline",
-          cursor: "pointer",
-        }}
-      >
-        ← Go Back
-      </Link>
+      <DisplayBlogContent post={post} author={author} goBackUrl={"/"} />
       <DisplayComments postId={post.id} />
     </Container>
   );
