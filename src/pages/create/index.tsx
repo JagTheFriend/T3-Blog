@@ -1,4 +1,7 @@
+import { format } from "date-fns";
+import { sanitize } from "dompurify";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
@@ -6,12 +9,92 @@ import {
   Container,
   FloatingLabel,
   Form,
+  Modal,
   Spinner,
 } from "react-bootstrap";
 import { toast } from "react-hot-toast";
+import { Converter } from "showdown";
 import FooterButtons from "~/component/FooterButtons";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
+
+type DisplayPreviewModalProps = {
+  show: boolean;
+  handleClose: () => void;
+  blogTitle: string;
+  blogDescription: string;
+  blogContent: string;
+};
+
+function DisplayPreviewModal({
+  show,
+  handleClose,
+  blogTitle,
+  blogDescription,
+  blogContent,
+}: DisplayPreviewModalProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  const date: string = format(new Date(), "dd/MM/yyyy");
+
+  const converter = new Converter();
+  const postContent = sanitize(converter.makeHtml(blogContent));
+
+  return (
+    <Modal
+      show={show}
+      onHide={handleClose}
+      fullscreen={true}
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Preview of blog</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Container>
+          <div
+            style={{
+              marginTop: "20px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <h3>{blogTitle}</h3>
+            by {"h"} at {date}
+          </div>
+          <hr />
+          Description: {blogDescription}
+          <hr />
+          <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
+          <Link
+            href="#"
+            style={{
+              background: "none !important",
+              border: "none",
+              padding: "0 !important",
+              color: "#069",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+          >
+            ← Go Back
+          </Link>
+        </Container>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            handleClose();
+          }}
+        >
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
 
 function CreatePost() {
   const router = useRouter();
@@ -21,6 +104,11 @@ function CreatePost() {
   const [blogTitle, setBlogTitle] = useState<string>("");
   const [blogDescription, setBlogDescription] = useState<string>("");
   const [blogContent, setBlogContent] = useState<string>("");
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const blogContentTextbox = useRef<HTMLTextAreaElement>(null);
 
@@ -82,8 +170,9 @@ function CreatePost() {
       <DisplayPreviewModal
         handleClose={handleClose}
         show={show}
+        blogTitle={blogTitle}
+        blogDescription={blogDescription}
         blogContent={blogContent}
-        setShow={setShow}
       />
 
       <Container>
