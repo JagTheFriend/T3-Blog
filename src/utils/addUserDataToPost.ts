@@ -1,15 +1,7 @@
 import { clerkClient } from "@clerk/nextjs";
-import type { User } from "@clerk/nextjs/dist/types/server";
 import type { Post } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-
-function filterUserForClient(user: User) {
-  return {
-    id: user.id,
-    username: user.username ?? "Unknown",
-    profileImageUrl: user.imageUrl,
-  };
-}
+import { filterUserForClient } from ".";
 
 export async function addUserDataToPost(posts: Post[]) {
   const userId = posts.map((post) => post.authorId);
