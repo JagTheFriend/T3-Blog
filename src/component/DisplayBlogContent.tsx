@@ -4,17 +4,17 @@ import { sanitize } from "dompurify";
 import Link from "next/link";
 import { Converter } from "showdown";
 
-type DataType = {
+export type DataType = {
   post: Post;
   author: {
     username: string;
     id: string;
     profileImageUrl: string;
   };
-  goBackUrl: string;
+  goBackUrl?: string;
 };
 
-function DisplayBlogContent({ post, author, goBackUrl }: DataType) {
+function DisplayBlogContent({ post, author, goBackUrl = "/" }: DataType) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const date: string = format(new Date(post.createdAt), "dd/MM/yyyy");
 
