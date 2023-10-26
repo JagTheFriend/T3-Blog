@@ -26,6 +26,7 @@ type CreateCommentProps = {
 
 function CreateComment({ postId }: CreateCommentProps) {
   const { user } = useUser();
+  const ctx = api.useContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutate } = api.comment.createComment.useMutation({
@@ -37,6 +38,7 @@ function CreateComment({ postId }: CreateCommentProps) {
       setComment("");
       setIsLoading(false);
       toast.success("Comment created successfully!");
+      void ctx.comment.getComments.invalidate();
     },
   });
 
