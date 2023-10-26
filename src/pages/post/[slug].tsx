@@ -4,7 +4,6 @@ import { format } from "date-fns";
 import { sanitize } from "dompurify";
 import type { GetStaticProps } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import toast from "react-hot-toast";
@@ -98,11 +97,9 @@ function ViewPost({ slug }: { slug: string }) {
     }
   }, [isError]);
 
-  useEffect(() => {
-    if (!data && isFetched) {
-      notFound();
-    }
-  }, [data, isFetched]);
+  if (!data && isFetched) {
+    return <div>404: Not Found</div>;
+  }
 
   return (
     <>
