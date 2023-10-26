@@ -11,7 +11,9 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import DisplayBlogContent, { DataType } from "~/component/DisplayBlogContent";
+import DisplayBlogContent, {
+  type DataType,
+} from "~/component/DisplayBlogContent";
 import FooterButtons from "~/component/FooterButtons";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
