@@ -89,6 +89,52 @@ function CreateComment({ postId }: CreateCommentProps) {
   );
 }
 
+function DeleteButton({
+  userId,
+  commentId,
+}: {
+  userId: string;
+  commentId: string;
+}) {
+  const ctx = api.useUtils();
+  const { user } = useUser();
+
+  // Check if userId of the author of comment === current userId
+  if (userId !== user?.id) {
+    return <></>;
+  }
+
+  const { mutate, isLoading } = api.comment.deleteComment.useMutation({
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      toast.success("Comment deleted successfully!");
+      void ctx.comment.getComments.invalidate();
+    },
+  });
+
+  const deleteComment = () => {
+    mutate({
+      commentId,
+    });
+  };
+
+  return (
+    <>
+      <br />
+      <Button
+        style={{ marginLeft: "40px" }}
+        variant="outline-danger"
+        disabled={isLoading}
+        onClick={() => deleteComment()}
+      >
+        Delete
+      </Button>
+    </>
+  );
+}
+
 type DisplayCommentContentProps = {
   receivedComment: {
     comment: Comment;
@@ -112,6 +158,10 @@ function DisplayCommentContent({
         }}
       />
       {receivedComment.author.username}: {receivedComment.comment.content}
+      <DeleteButton
+        userId={receivedComment.author.id}
+        commentId={receivedComment.comment.id}
+      />
       <hr />
     </div>
   );
