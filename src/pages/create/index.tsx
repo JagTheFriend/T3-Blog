@@ -1,7 +1,5 @@
-import { format } from "date-fns";
-import { sanitize } from "dompurify";
+import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
@@ -13,7 +11,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import { Converter } from "showdown";
+import DisplayBlogContent, { DataType } from "~/component/DisplayBlogContent";
 import FooterButtons from "~/component/FooterButtons";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
@@ -33,11 +31,27 @@ function DisplayPreviewModal({
   blogDescription,
   blogContent,
 }: DisplayPreviewModalProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const date: string = format(new Date(), "dd/MM/yyyy");
+  const { user } = useUser();
 
-  const converter = new Converter();
-  const postContent = sanitize(converter.makeHtml(blogContent));
+  const data: DataType = {
+    post: {
+      content: blogContent,
+      description: blogDescription,
+      title: blogTitle,
+      hasEdited: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      authorId: "",
+      id: "",
+      slug: "",
+    },
+    author: {
+      username: user?.username ?? "Unknown",
+      id: "",
+      profileImageUrl: user?.imageUrl ?? "",
+    },
+    goBackUrl: "#",
+  };
 
   return (
     <Modal
@@ -52,34 +66,11 @@ function DisplayPreviewModal({
       </Modal.Header>
       <Modal.Body>
         <Container>
-          <div
-            style={{
-              marginTop: "20px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <h3>{blogTitle}</h3>
-            by {"h"} at {date}
-          </div>
-          <hr />
-          Description: {blogDescription}
-          <hr />
-          <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
-          <Link
-            href="#"
-            style={{
-              background: "none !important",
-              border: "none",
-              padding: "0 !important",
-              color: "#069",
-              textDecoration: "underline",
-              cursor: "pointer",
-            }}
-          >
-            ← Go Back
-          </Link>
+          <DisplayBlogContent
+            post={data.post}
+            author={data.author}
+            goBackUrl={data.goBackUrl}
+          />
         </Container>
       </Modal.Body>
       <Modal.Footer>
