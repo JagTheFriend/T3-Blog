@@ -34,9 +34,9 @@ function CreateComment({ postId }: CreateCommentProps) {
       setIsLoading(false);
     },
     onSuccess: () => {
-      toast.success("Comment created successfully!");
       setComment("");
       setIsLoading(false);
+      toast.success("Comment created successfully!");
     },
   });
 
@@ -69,6 +69,7 @@ function CreateComment({ postId }: CreateCommentProps) {
         <Form.Control
           type="text"
           disabled={isLoading}
+          value={comment}
           placeholder="Write a comment"
           onChange={(e) => {
             setComment(e.target.value);
