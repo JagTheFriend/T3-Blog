@@ -81,6 +81,7 @@ function DisplayComments({ postId }: { postId: string }) {
   const { data, isError, isLoading } = api.comment.getComments.useQuery({
     postId,
   });
+  console.log("🚀 ~ file: [slug].tsx:84 ~ DisplayComments ~ data:", data);
 
   useEffect(() => {
     if (isError) {
