@@ -79,6 +79,13 @@ function CreatePost() {
 
       <NavbarComponent />
 
+      <DisplayPreviewModal
+        handleClose={handleClose}
+        show={show}
+        blogContent={blogContent}
+        setShow={setShow}
+      />
+
       <Container>
         <FloatingLabel
           controlId="blogTitleInput"
