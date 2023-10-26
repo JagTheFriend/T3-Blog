@@ -251,7 +251,7 @@ function ViewPost({ slug }: { slug: string }) {
 export const getStaticProps: GetStaticProps = (context) => {
   const slug = context.params?.slug;
 
-  if (typeof slug !== "string") throw new Error("no slug");
+  if (typeof slug !== "string") throw new Error("No Slug");
   return {
     props: {
       slug,
