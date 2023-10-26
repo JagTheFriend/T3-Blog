@@ -30,7 +30,11 @@ function DisplayUserName() {
         textDecoration: "underline",
       }}
     >
-      {isSignedIn ? `Welcome ${user.username}!` : ""}
+      {isSignedIn
+        ? `Welcome ${
+            user.username ?? `${user.firstName} ${user.lastName}` ?? "Unknown"
+          }!`
+        : ""}
     </div>
   );
 }
@@ -53,7 +57,6 @@ function DisplayPostCard({ data }: DisplayPostCardProps) {
           justifyContent: "center",
           alignItems: "center",
           alignContent: "space-between",
-          flexWrap: "wrap",
           flexDirection: "column",
         }}
       >
