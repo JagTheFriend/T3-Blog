@@ -1,4 +1,5 @@
 import { useUser } from "@clerk/nextjs";
+import type { Comment } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
@@ -77,11 +78,23 @@ function CreateComment({ postId }: CreateCommentProps) {
   );
 }
 
+type DisplayCommentContentProps = {
+  receivedComment: {
+    comment: Comment;
+    author: { username: string; id: string; profileImageUrl: string };
+  };
+};
+
+function DisplayCommentContent({
+  receivedComment,
+}: DisplayCommentContentProps) {
+  return <></>;
+}
+
 function DisplayComments({ postId }: { postId: string }) {
   const { data, isError, isLoading } = api.comment.getComments.useQuery({
     postId,
   });
-  console.log("🚀 ~ file: [slug].tsx:84 ~ DisplayComments ~ data:", data);
 
   useEffect(() => {
     if (isError) {
@@ -96,6 +109,14 @@ function DisplayComments({ postId }: { postId: string }) {
   return (
     <>
       <CreateComment postId={postId} />
+      {!data
+        ? ""
+        : data.map((receivedData) => (
+            <DisplayCommentContent
+              key={receivedData.comment.id}
+              receivedComment={receivedData}
+            />
+          ))}
     </>
   );
 }
