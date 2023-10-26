@@ -105,11 +105,8 @@ function ViewPost({ slug }: { slug: string }) {
   return (
     <>
       <Head>
-        <title>T3 Blog - {(data as DataType).post.title}</title>
-        <meta
-          name="description"
-          content={(data as DataType).post.description}
-        />
+        <title>T3 Blog</title>
+        <meta name="description" content="Simple blog made using T3-Stack" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavbarComponent />
