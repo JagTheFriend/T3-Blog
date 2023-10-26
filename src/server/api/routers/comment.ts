@@ -15,6 +15,7 @@ export const commentRouter = createTRPCRouter({
         where: {
           postId: input.postId,
         },
+        orderBy: [{ createdAt: "desc" }],
       });
 
       return await addUserDataToComment(comments);
