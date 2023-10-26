@@ -201,7 +201,10 @@ function CreatePost() {
           />
         </FloatingLabel>
 
-        <FloatingLabel label="Blog Content" controlId="blogContentInput">
+        <FloatingLabel
+          label="Blog Content (markdown supported)"
+          controlId="blogContentInput"
+        >
           <Form.Control
             value={blogContent}
             disabled={isLoading}
