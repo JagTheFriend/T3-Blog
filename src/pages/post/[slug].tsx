@@ -1,11 +1,12 @@
-import type { Post } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import toast from "react-hot-toast";
-import DisplayBlogContent from "~/component/DisplayBlogContent";
+import DisplayBlogContent, {
+  type DataType,
+} from "~/component/DisplayBlogContent";
 import LoadingPage from "~/component/LoadingPage";
 import NavbarComponent from "~/component/Navbar";
 import { api } from "~/utils/api";
@@ -23,15 +24,6 @@ function DisplayComments({ postId }: { postId: string }) {
 
   return <></>;
 }
-
-type DataType = {
-  post: Post;
-  author: {
-    username: string;
-    id: string;
-    profileImageUrl: string;
-  };
-};
 
 type ViewPostDetailType = {
   data: TRPCError | DataType | undefined;
