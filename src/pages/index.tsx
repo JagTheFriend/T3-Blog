@@ -94,11 +94,20 @@ type DisplayDataProps = {
 
 function DisplayData({ data }: DisplayDataProps) {
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        gridGap: "2rem",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        flexWrap: "wrap",
+      }}
+    >
       {data?.map((post) => (
         <DisplayPostCard key={post.post.id} data={post} />
       ))}
-    </>
+    </div>
   );
 }
 
