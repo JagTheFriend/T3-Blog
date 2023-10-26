@@ -26,7 +26,7 @@ type CreateCommentProps = {
 
 function CreateComment({ postId }: CreateCommentProps) {
   const { user } = useUser();
-  const ctx = api.useContext();
+  const ctx = api.useUtils();
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutate } = api.comment.createComment.useMutation({
