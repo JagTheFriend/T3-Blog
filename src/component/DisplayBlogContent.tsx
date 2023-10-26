@@ -1,8 +1,54 @@
+import { useUser } from "@clerk/nextjs";
 import type { Post } from "@prisma/client";
 import { format } from "date-fns";
 import { sanitize } from "dompurify";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { Converter } from "showdown";
+import { api } from "~/utils/api";
+
+function DeletePost({
+  authorId,
+  postId,
+}: {
+  authorId: string;
+  postId: string;
+}) {
+  const router = useRouter();
+  const { user } = useUser();
+  // Check if userId of the author of post === current userId
+  if (user?.id !== authorId) {
+    return <></>;
+  }
+
+  const { mutate, isLoading } = api.post.deletePost.useMutation({
+    onError: () => {
+      toast.error("Something went wrong. Please try again later!");
+    },
+    onSuccess: () => {
+      toast.success("Post deleted successfully!");
+      router.push("/");
+    },
+  });
+
+  const deletePost = () => {
+    mutate({
+      postId,
+    });
+  };
+
+  return (
+    <Button
+      variant="outline-danger"
+      onClick={() => deletePost()}
+      disabled={isLoading}
+    >
+      Delete Post
+    </Button>
+  );
+}
 
 export type DataType = {
   post: Post;
@@ -33,6 +79,7 @@ function DisplayBlogContent({ post, author, goBackUrl = "/" }: DataType) {
       >
         <h3>{post.title}</h3>
         By {author.username} at {date}
+        <DeletePost authorId={author.id} postId={post.id} />
       </div>
       <hr />
       Description: {post.description}
