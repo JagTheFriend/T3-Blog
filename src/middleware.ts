@@ -8,6 +8,8 @@ export default authMiddleware({
     "/",
     "/api/trpc/post.getPosts",
     "/api/trpc/post.getPostBySlug",
+    "/api/trpc/comment.getComments",
+    "/api/trpc/post.getPostBySlug,comment.getComments",
     "/post/(.*)",
   ],
 });
