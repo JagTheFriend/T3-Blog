@@ -1,9 +1,10 @@
-import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
+import { SignInButton, UserButton, useAuth, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 function NavbarComponent() {
   const { isSignedIn } = useAuth();
+  const { user } = useUser();
   return (
     <Navbar
       expand="lg"
@@ -28,7 +29,13 @@ function NavbarComponent() {
                 <Link href="/create">Create Post</Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.3">My Posts</NavDropdown.Item>
+              {isSignedIn ? (
+                <NavDropdown.Item href={`/profile/${user?.id}`}>
+                  My Posts
+                </NavDropdown.Item>
+              ) : (
+                ""
+              )}
             </NavDropdown>
           </Nav>
           <div className="d-flex">
