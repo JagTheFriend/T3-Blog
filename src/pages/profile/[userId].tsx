@@ -25,6 +25,10 @@ function GetPostsByUserId({ userId }: { userId: string }) {
         <LoadingPage />
       ) : (
         <div className="mt-3">
+          <div className="header" style={{ textAlign: "center" }}>
+            <h4>Posts made by: {data?.[0]?.author?.username ?? "Unknown"}</h4>
+          </div>
+          <hr />
           <DisplayData data={data} />
         </div>
       )}
