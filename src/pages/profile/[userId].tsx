@@ -1,6 +1,8 @@
+import { clerkClient } from "@clerk/nextjs";
+import type { User } from "@clerk/nextjs/dist/types/server/clerkClient";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import LoadingPage from "~/component/LoadingPage";
 import NavbarComponent from "~/component/Navbar";
@@ -12,6 +14,18 @@ function GetPostsByUserId({ userId }: { userId: string }) {
     api.post.getPostByUserId.useQuery({
       userId,
     });
+
+  const [userDetail, setUserDetail] = useState<User>();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await clerkClient.users.getUser(userId);
+      setUserDetail(response);
+    };
+    getUser().catch((_error) =>
+      toast.error("An error ocurred while fetching user detail")
+    );
+  }, [userId]);
 
   useEffect(() => {
     if (isError && isFetched) {
@@ -27,10 +41,18 @@ function GetPostsByUserId({ userId }: { userId: string }) {
       ) : (
         <>
           <Head>
-            <title>Blogs made by {data?.[0]?.author?.username ?? "Unknown"}</title>
+            <title>
+              Blogs made by{" "}
+              {data?.[0]?.author?.username ??
+                userDetail?.username ??
+                `${userDetail?.firstName} ${userDetail?.lastName}` ??
+                "Unknown"}
+            </title>
             <meta
               name="description"
-              content={`Blogs created by ${data?.[0]?.author?.username ?? "Unknown"}`}
+              content={`Blogs created by ${
+                data?.[0]?.author?.username ?? "Unknown"
+              }`}
             />
             <link rel="icon" href="/favicon.ico" />
           </Head>
