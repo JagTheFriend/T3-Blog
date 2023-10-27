@@ -1,4 +1,5 @@
 import type { GetStaticProps } from "next";
+import Head from "next/head";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import LoadingPage from "~/component/LoadingPage";
@@ -24,13 +25,24 @@ function GetPostsByUserId({ userId }: { userId: string }) {
       {isLoading ? (
         <LoadingPage />
       ) : (
-        <div className="mt-3">
-          <div className="header" style={{ textAlign: "center" }}>
-            <h4>Posts made by: {data?.[0]?.author?.username ?? "Unknown"}</h4>
+        <>
+          <Head>
+            <title>Blogs made by {data?.[0]?.author?.username ?? "Unknown"}</title>
+            <meta
+              name="description"
+              content={`Blogs created by ${data?.[0]?.author?.username ?? "Unknown"}`}
+            />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+
+          <div className="mt-3">
+            <div className="header" style={{ textAlign: "center" }}>
+              <h4>Posts made by: {data?.[0]?.author?.username ?? "Unknown"}</h4>
+            </div>
+            <hr />
+            <DisplayData data={data} />
           </div>
-          <hr />
-          <DisplayData data={data} />
-        </div>
+        </>
       )}
     </>
   );
