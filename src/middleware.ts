@@ -11,6 +11,8 @@ export default authMiddleware({
     "/api/trpc/comment.getComments",
     "/api/trpc/post.getPostBySlug,comment.getComments",
     "/post/(.*)",
+    "/profile",
+    "/profile/(.*)",
   ],
 });
 export const config = {
