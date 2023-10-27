@@ -28,11 +28,13 @@ function NavbarComponent() {
               <NavDropdown.Item>
                 <Link href="/create">Create Post</Link>
               </NavDropdown.Item>
-              <NavDropdown.Divider />
               {isSignedIn ? (
-                <NavDropdown.Item href={`/profile/${user?.id}`}>
-                  My Posts
-                </NavDropdown.Item>
+                <>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href={`/profile/${user?.id}`}>
+                    My Posts
+                  </NavDropdown.Item>
+                </>
               ) : (
                 ""
               )}
