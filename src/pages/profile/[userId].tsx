@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import LoadingPage from "~/component/LoadingPage";
 import NavbarComponent from "~/component/Navbar";
+import DisplayData from "~/component/ViewBlog";
 import { api } from "~/utils/api";
-import { DisplayData } from "..";
 
 function GetPostsByUserId({ userId }: { userId: string }) {
   const { data, isLoading, isError, isFetched } =
