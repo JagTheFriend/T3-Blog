@@ -1,7 +1,13 @@
 import type { GetStaticProps } from "next";
+import NavbarComponent from "~/component/Navbar";
 
 function GetPostsByUserId({ userId }: { userId: string }) {
-  return <>{userId}</>;
+  return (
+    <>
+      <NavbarComponent />
+      {userId}
+    </>
+  );
 }
 
 export const getStaticProps: GetStaticProps = (context) => {
