@@ -237,13 +237,24 @@ function ViewPost({ slug }: { slug: string }) {
 
   return (
     <>
-      <Head>
-        <title>T3 Blog</title>
-        <meta name="description" content="Simple blog made using T3-Stack" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <NavbarComponent />
-      {isLoading ? <LoadingPage /> : <ViewPostDetail data={data} />}
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          <Head>
+            <title>{`${(data as DataType).post.title} by ${
+              (data as DataType).author.username ?? "Unknown"
+            }`}</title>
+            <meta
+              name="description"
+              content={(data as DataType).post.description}
+            />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <ViewPostDetail data={data} />
+        </>
+      )}
     </>
   );
 }
