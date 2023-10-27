@@ -78,7 +78,24 @@ function DisplayBlogContent({ post, author, goBackUrl = "/" }: DataType) {
         }}
       >
         <h3>{post.title}</h3>
-        By {author.username} at {date}
+        <div>
+          By{" "}
+          <Link
+            href={`/profile/${author.id}`}
+            style={{
+              background: "none !important",
+              border: "none",
+              padding: "0 !important",
+              color: "#069",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+          >
+            {author.username}
+          </Link>{" "}
+          at {date}
+        </div>
+
         <DeletePost authorId={author.id} postId={post.id} />
       </div>
       <hr />
