@@ -6,10 +6,11 @@ import { authMiddleware } from "@clerk/nextjs";
 export default authMiddleware({
   publicRoutes: [
     "/",
+    "/api/trpc/comment.getComments",
     "/api/trpc/post.getPosts",
     "/api/trpc/post.getPostBySlug",
-    "/api/trpc/comment.getComments",
     "/api/trpc/post.getPostBySlug,comment.getComments",
+    "/api/trpc/post.getPostByUserId",
     "/post/(.*)",
     "/profile",
     "/profile/(.*)",
