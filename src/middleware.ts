@@ -12,6 +12,7 @@ export default authMiddleware({
     "/api/trpc/post.getPostBySlug,comment.getComments",
     "/api/trpc/post.getPostByUserId",
     "/api/trpc/user.getUserById",
+    "/api/trpc/post.getPostByUserId,user.getUserById",
     "/post/(.*)",
     "/profile",
     "/profile/(.*)",
