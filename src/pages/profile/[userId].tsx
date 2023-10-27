@@ -1,13 +1,32 @@
-import { clerkClient } from "@clerk/nextjs";
-import type { User } from "@clerk/nextjs/dist/types/server/clerkClient";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import LoadingPage from "~/component/LoadingPage";
 import NavbarComponent from "~/component/Navbar";
 import DisplayData from "~/component/ViewBlog";
 import { api } from "~/utils/api";
+
+function HeaderComponent({ username }: { username: string }) {
+  return (
+    <Head>
+      <title>Blogs made by {username ?? "Unknown"}</title>
+      <meta
+        name="description"
+        content={`Blogs created by ${username ?? "Unknown"}`}
+      />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+  );
+}
+
+function DisplayUsername({ username }: { username: string }) {
+  return (
+    <div className="header" style={{ textAlign: "center" }}>
+      <h4>Posts made by: {username}</h4>
+    </div>
+  );
+}
 
 function GetPostsByUserId({ userId }: { userId: string }) {
   const { data, isLoading, isError, isFetched } =
@@ -15,17 +34,14 @@ function GetPostsByUserId({ userId }: { userId: string }) {
       userId,
     });
 
-  const [userDetail, setUserDetail] = useState<User>();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const response = await clerkClient.users.getUser(userId);
-      setUserDetail(response);
-    };
-    getUser().catch((_error) =>
-      toast.error("An error ocurred while fetching user detail")
-    );
-  }, [userId]);
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    isError: userIsError,
+    isFetched: userIsFetched,
+  } = api.user.getUserById.useQuery({
+    userId,
+  });
 
   useEffect(() => {
     if (isError && isFetched) {
@@ -33,34 +49,22 @@ function GetPostsByUserId({ userId }: { userId: string }) {
     }
   }, [isError, isFetched]);
 
+  useEffect(() => {
+    if (userIsError && userIsFetched) {
+      toast.error("Unable to user data. Please try again later");
+    }
+  }, [userIsError, userIsFetched]);
+
   return (
     <>
       <NavbarComponent />
-      {isLoading ? (
+      {isLoading || userIsLoading ? (
         <LoadingPage />
       ) : (
         <>
-          <Head>
-            <title>
-              Blogs made by{" "}
-              {data?.[0]?.author?.username ??
-                userDetail?.username ??
-                `${userDetail?.firstName} ${userDetail?.lastName}` ??
-                "Unknown"}
-            </title>
-            <meta
-              name="description"
-              content={`Blogs created by ${
-                data?.[0]?.author?.username ?? "Unknown"
-              }`}
-            />
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
-
+          <HeaderComponent username={userData?.username ?? "Unknown"} />
           <div className="mt-3">
-            <div className="header" style={{ textAlign: "center" }}>
-              <h4>Posts made by: {data?.[0]?.author?.username ?? "Unknown"}</h4>
-            </div>
+            <DisplayUsername username={userData?.username ?? "Unknown"} />
             <hr />
             <DisplayData data={data} />
           </div>
